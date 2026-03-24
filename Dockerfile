@@ -1,5 +1,5 @@
 # Usamos una imagen oficial de Tomcat
-FROM tomcat:9.0-jdk11-openjdk
+FROM tomcat:9.0-jdk17-openjdk
 
 # Borramos las apps por defecto de Tomcat para limpiar
 RUN rm -rf /usr/local/tomcat/webapps/*
