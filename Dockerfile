@@ -1,11 +1,15 @@
-# Usamos Java 21 directamente (sin instalar Tomcat aparte)
-FROM openjdk:21-jdk-slim
+# Usamos una imagen de Java moderna y estable
+FROM eclipse-temurin:21-jre-jammy
 
-# Copiamos tu archivo .war (que ya tiene su propio Tomcat dentro)
+# Establecemos la carpeta de trabajo
+WORKDIR /app
+
+# Copiamos tu archivo .war (asegúrate de que se llame ROOT.war en tu GitHub)
 COPY ROOT.war app.war
 
-# Exponemos el puerto que Railway espera
+# Le decimos a Railway por qué puerto escuchar
+ENV PORT=8080
 EXPOSE 8080
 
-# Ejecutamos la aplicación como un ejecutable directo
+# Ejecutamos la aplicación
 ENTRYPOINT ["java", "-jar", "app.war"]
