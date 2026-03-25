@@ -1,14 +1,11 @@
-# Usamos Tomcat 10.1 que es el compatible con Spring Boot 3
-FROM tomcat:10.1-jdk21-openjdk-slim
+# Usamos Java 21 directamente (sin instalar Tomcat aparte)
+FROM openjdk:21-jdk-slim
 
-# Borramos las aplicaciones que trae Tomcat por defecto para que no estorben
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Copiamos tu archivo .war (que ya tiene su propio Tomcat dentro)
+COPY ROOT.war app.war
 
-# Copiamos tu archivo .war generado con Maven (asegúrate que se llame ROOT.war)
-COPY ROOT.war /usr/local/tomcat/webapps/ROOT.war
-
-# Exponemos el puerto estándar
+# Exponemos el puerto que Railway espera
 EXPOSE 8080
 
-# Comando para arrancar el servidor
-CMD ["catalina.sh", "run"]
+# Ejecutamos la aplicación como un ejecutable directo
+ENTRYPOINT ["java", "-jar", "app.war"]
